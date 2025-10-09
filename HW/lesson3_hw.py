@@ -1,34 +1,42 @@
 class Car:
-    def __init__(self, brand, fool_level, engin_status):
+    def __init__(self, brand, fuel_level, engin_status):
         self.brand = brand
-        self._fool_level = fool_level
-        self.__engin_status = engin_status
+        self._fuel_level = 0
+        self.__engine_status = False
 
-    def start_engin(self):
-        if self._fool_level > 0:
-            engin_status = True
+    def start_engine(self):
+        if self._fuel_level > 0:
+            self.__engine_status = True
+            print("Двигатель запущен!")
         else:
-            engin_status = False
-        return engin_status
+            print("Невозможно завести двигатель — нет топлива!")
 
-    def stop_engin(self):
-        if self._fool_level == 0:
-            return False
-    # def drive(self):
-    #     while True:
-    #         if self._fool_level > 0:
-    #             self._fool_level -= 1
-    #         else:
-    #             return self._fool_level
+    def stop_engine(self):
+        self.__engine_status = False
+        print("Двигатель остановлен.")
 
-    def drive(self):
-        if self._fool_level > 0:
-            distance = self._fool_level *0.1
-            return distance
+    def drive(self, distance):
+        fuel_needed = distance * 0.1
+        if self.__check_fuel(fuel_needed):
+            self._fuel_level -= fuel_needed
+            print(f"Проехали {distance} км, осталось {self._fuel_level:} литров топлива.")
         else:
-            return f"топлива не хватает"
+            print("Недостаточно топлива для поездки!")
 
-Toyota = Car('Toyota', 10, "False")
+    def refuel(self, amount):
+        self._fuel_level += amount
+        print(f"Добавлено {amount} литров топлива. Текущий уровень: {self._fuel_level:.1f} литров.")
 
-print(Toyota.stop_engin())
-print(Toyota.drive())
+    def get_status(self):
+        engine_state = "включен" if self.__engine_status else "выключен"
+        return f"Марка: {self.brand} | Топливо: {self._fuel_level:} | Двигатель: {engine_state}"
+
+    def __check_fuel(self, required):
+        return self._fuel_level >= required
+
+
+car = Car("Toyota", 10, 1)
+car.refuel(10)
+car.start_engine()
+car.drive(5)
+print(car.get_status())

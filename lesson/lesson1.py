@@ -1,8 +1,6 @@
 
 def action():
     print('Base action!!')
-
-action()
 class Hero:
 
     # Метод класса
@@ -31,10 +29,6 @@ asuna = Hero("Asuna", 99, 11000)
 kirito = Hero("Kirito", 100, 1000)
 integer = 123
 strings = [123]
-
-action()
-kirito.action()
-
 # print(type(kirito))
 # print(type(integer))
 # print(type(strings))
